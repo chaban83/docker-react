@@ -1,0 +1,25 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        - http-proxy=http://165.225.76.38:80/
+        - https_proxy=http://165.225.76.38:80/
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        - http-proxy=http://165.225.76.38:80/
+        - https_proxy=http://165.225.76.38:80/
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
